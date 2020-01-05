@@ -1,5 +1,5 @@
 
-This module is not yet tested. This module is an implementation of my advice from [this from post](https://devforum.roblox.com/t/example-code-on-developer-product-purchase-handling-misses-a-key-point-that-can-cause-devs-to-lose-revenue/268980/5?u=corecii).
+This module is not yet tested. This module is an implementation of my advice from [this forum post](https://devforum.roblox.com/t/example-code-on-developer-product-purchase-handling-misses-a-key-point-that-can-cause-devs-to-lose-revenue/268980/5?u=corecii).
 
 # PurchaseProcessor
 

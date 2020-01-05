@@ -4,13 +4,12 @@ local PurchaseProcessorBridge = require("PurchaseProcessorBridge")
 
 ---
 
-local processor = PurchaseProcessor.new(PurchaseProcessorBridge)
-
 local module = {}
 
 function module:Start()
-	game.Players.PlayerAdded:Connect(processor.onPlayerAdded)
-	game.MarketplaceService.ProcessReceipt = processor.onProcessReceipt
+	PurchaseProcessor.SetBridge(PurchaseProcessorBridge)
+	game.Players.PlayerAdded:Connect(PurchaseProcessor.PlayerAdded)
+	game.MarketplaceService.ProcessReceipt = PurchaseProcessor.ProcessReceipt
 end
 
 return module

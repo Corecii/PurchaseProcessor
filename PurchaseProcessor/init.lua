@@ -26,6 +26,10 @@ function PurchaseProcessor.ProcessReceipt(purchaseInfo)
 	-- CurrencyType
 	-- PlaceIdWherePurchased
 
+	if not bridge then
+		error("[PurchaseProcessor] Bridge not set. Call PurchaseProcessor.SetBridge(bridge) before using PurchaseProcessor")
+	end
+
 	if bridge.IsNotSavedProduct(purchaseInfo.ProductId) then
 		local success, error = pcall(function()
 			bridge.AwardNotSavedProduct(purchaseInfo)
@@ -85,6 +89,10 @@ function PurchaseProcessor.ProcessReceipt(purchaseInfo)
 end
 
 function PurchaseProcessor.PlayerAdded(player)
+	if not bridge then
+		error("[PurchaseProcessor] Bridge not set. Call PurchaseProcessor.SetBridge(bridge) before using PurchaseProcessor")
+	end
+
 	local canContinue = bridge.WaitForDataReady(player.UserId)
 	if not canContinue then
 		warn(("[PurchaseProcessor] ProcessPlayerAdded cancelled because WaitForDataReady returned falsey. Player: %d"):format(player.UserId))

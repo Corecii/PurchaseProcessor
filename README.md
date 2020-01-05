@@ -1,4 +1,6 @@
 
+This module is not yet tested. This module is an implementation of my advice from [this from post](https://devforum.roblox.com/t/example-code-on-developer-product-purchase-handling-misses-a-key-point-that-can-cause-devs-to-lose-revenue/268980/5?u=corecii).
+
 # PurchaseProcessor
 
 *PurchaseProcessor* is a module for Roblox that tracks purchase state to safely award and save purchases.

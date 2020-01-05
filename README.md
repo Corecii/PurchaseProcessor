@@ -5,6 +5,8 @@
 
 Most example ProcessReceipt code does not handle edge-cases such that leaving too early, data save failing, or buying another product can lead to lost money or double of a product. *PurchaseProcessor* tracks product purchase state to prevent these things.
 
+*PurchaseProcessor* will only track products in player save data for four days. After four days, Roblox will not call ProcessReceipt with those purchase ids anymore.
+
 ## Scenarios
 
 *PurchaseProcessor* handles the following scenarios:

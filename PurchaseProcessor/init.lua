@@ -28,9 +28,15 @@ function PurchaseProcessor:ProcessPurchase(purchaseInfo)
 		return Enum.ProductPurchaseDecision.PurchaseGranted
 	end
 
+	local canContinue = self.bridge:WaitForDataReady(purchaseInfo.PlayerId)
+	if not canContinue then
+		warn(("[PurchaseProcessor] ProcessPurchase cancelled because WaitForDataReady returned falsey. Player: %d"):format(purchaseInfo.PlayerId))
+		return Enum.ProductPurchaseDecision.NotProcessedYet
+	end
+
 	if not self.bridge:CanProcessProduct(purchaseInfo) then
-		warn(("[PurchaseProcessor] ProcessPurchase cancelled because ProcessPurchase returned falsey. Player: %d; Product: %d; PurchaseId: %s"):format(purchaseInfo.PlayerId, purchaseInfo.ProductId, tostring(purchaseInfo.PurchaseId)))
-		return
+		warn(("[PurchaseProcessor] ProcessPurchase cancelled because CanProcessProduct returned falsey. Player: %d; Product: %d; PurchaseId: %s"):format(purchaseInfo.PlayerId, purchaseInfo.ProductId, tostring(purchaseInfo.PurchaseId)))
+		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
 	local purchaseState = self.bridge:GetPurchaseState(purchaseInfo.PlayerId, purchaseInfo.PurchaseId)
@@ -71,8 +77,8 @@ function PurchaseProcessor:ProcessPurchase(purchaseInfo)
 end
 
 function PurchaseProcessor:ProcessPlayerAdded(player)
-	local ready = self.bridge:WaitForDataReady(player)
-	if not ready then
+	local canContinue = self.bridge:WaitForDataReady(player.UserId)
+	if not canContinue then
 		warn(("[PurchaseProcessor] ProcessPlayerAdded cancelled because WaitForDataReady returned falsey. Player: %d"):format(player.UserId))
 		return
 	end

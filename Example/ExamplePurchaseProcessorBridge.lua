@@ -28,8 +28,9 @@ function PurchaseProcessorBridge:GetPurchaseTimesDictionary(playerId) --> Purcha
 	return data.PurchaseTimes
 end
 
-function PurchaseProcessorBridge:WaitForDataReady(player) --> Continue: boolean
+function PurchaseProcessorBridge:WaitForDataReady(playerId) --> Continue: boolean
 	-- 1. Make sure player is in the game (return false otherwise)
+	local player = game.Players:GetPlayerByUserId(purchaseInfo.PlayerId)
 	if not player.Parent then
 		return false
 	end

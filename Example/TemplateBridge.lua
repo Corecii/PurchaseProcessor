@@ -1,6 +1,13 @@
 
 local PurchaseProcessorBridge = {}
 
+-- The Get_ and Set_ methods should get/set player save data
+-- The Get_ and Set_ methods **SHOULD NOT YIELD**. WaitForDataReady is called before any Get_ or Set_ methods are called.
+-- The GetPurchaseTimesDictionary result will not be modified. It is safe to return the raw dictionary.
+
+-- CanProcessProduct is called directly after WaitForDataReady on ProcessPurchase.
+-- WaitForDataReady is called in both ProcessPurchase and ProcessPlayerAdded.
+
 function PurchaseProcessorBridge:GetPurchaseState(playerId, purchaseId) --> PurchaseState: string | nil
 
 end
@@ -21,10 +28,10 @@ function PurchaseProcessorBridge:GetPurchaseTimesDictionary(playerId) --> Purcha
 
 end
 
-function PurchaseProcessorBridge:WaitForDataReady(player) --> Continue: boolean
-	-- 1. Make sure player is in the game (return false otherwise)
+function PurchaseProcessorBridge:WaitForDataReady(playerId) --> Continue: boolean
+	-- 1. Make sure playerId is in the game (return false otherwise)
 	-- 2. Wait for the data to load or the player to leave
-	-- 3. Make sure player is in the game (return false otherwise)
+	-- 3. Make sure playerId is in the game (return false otherwise)
 	-- 4. return true
 end
 
@@ -37,7 +44,8 @@ end
 function PurchaseProcessorBridge:AwardProduct(purchaseInfo) --> Continue: boolean
 	-- 1. Try to award the product
 	-- 2. Make sure purchaseInfo.PlayerId is in the game (return false otherwise)
-	-- 3. return true
+	-- 3. Make sure player data is still present and read/writeable (return false otherwise)
+	-- 4. return true
 end
 
 -- A "NotSavedProduct" is a product whose effects are not saved with the player at all.

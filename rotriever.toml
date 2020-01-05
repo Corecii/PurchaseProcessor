@@ -1,0 +1,7 @@
+[package]
+name = "PurchaseProcessor"
+author = "Corecii"
+content_root = "PurchaseProcessor"
+version = "1.0.0"
+
+[dependencies]

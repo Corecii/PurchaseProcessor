@@ -30,9 +30,9 @@ function PurchaseProcessor.ProcessReceipt(purchaseInfo)
 		error("[PurchaseProcessor] Bridge not set. Call PurchaseProcessor.SetBridge(bridge) before using PurchaseProcessor")
 	end
 
-	if bridge.IsNotSavedProduct(purchaseInfo.ProductId) then
+	if bridge.IsSessionOnlyProduct(purchaseInfo.ProductId) then
 		local success, error = pcall(function()
-			bridge.AwardNotSavedProduct(purchaseInfo)
+			bridge.AwardSessionOnlyProduct(purchaseInfo)
 		end)
 		if not success then
 			error(("[PurchaseProcessor] Failed to award not-saved product %d for %d (%s) because:"):format(purchaseInfo.ProductId, purchaseInfo.PlayerId, tostring(purchaseInfo.PurchaseId)))

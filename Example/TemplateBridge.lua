@@ -50,16 +50,16 @@ function Bridge.AwardProduct(purchaseInfo) --> Continue: boolean
 	-- 4. return true
 end
 
--- A "NotSavedProduct" is a product whose effects are not saved with the player at all.
--- A "NotSavedProduct" should not touch save data at all.
--- Leaving the server after buying a "NotSavedProduct" means you lose that product.
+-- A "SessionOnlyProduct" is a product whose effects are not saved with the player at all.
+-- A "SessionOnlyProduct" should not touch save data at all.
+-- Leaving the server after buying a "SessionOnlyProduct" means you lose that product.
 -- This bypasses the saving logic of PurchaseProcessor for extremely simple products.
 
-function Bridge.IsNotSavedProduct(productId) --> IsNotSavedProduct: boolean
+function Bridge.IsSessionOnlyProduct(productId) --> IsSessionOnlyProduct: boolean
 
 end
 
-function Bridge.AwardNotSavedProduct(purchaseInfo) --> void
+function Bridge.AwardSessionOnlyProduct(purchaseInfo) --> void
 
 end
 

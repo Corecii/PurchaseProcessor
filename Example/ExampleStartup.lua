@@ -9,12 +9,8 @@ local processor = PurchaseProcessor.new(PurchaseProcessorBridge)
 local module = {}
 
 function module:Start()
-	game.Players.PlayerAdded:Connect(function(player)
-		processor:ProcessPlayerAdded(player)
-	end)
-	game.MarketplaceService.ProcessReceipt = function(purchaseInfo)
-		processor:ProcessPurchase(purchaseInfo)
-	end
+	game.Players.PlayerAdded:Connect(processor.onPlayerAdded)
+	game.MarketplaceService.ProcessReceipt = processor.onProcessReceipt
 end
 
 return module

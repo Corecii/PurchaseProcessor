@@ -1,34 +1,34 @@
 local PlayerData = require("PlayerData")
 local Products = require("Products")
 
-local PurchaseProcessorBridge = {}
+local Bridge = {}
 
-function PurchaseProcessorBridge:GetPurchaseState(playerId, purchaseId) --> PurchaseState: string | nil
+function Bridge.GetPurchaseState(playerId, purchaseId) --> PurchaseState: string | nil
 	local data = PlayerData:GetPlayerDataByUserId(playerId)
 	return data.PurchaseStates[purchaseId]
 end
 
-function PurchaseProcessorBridge:SetPurchaseState(playerId, purchaseId, state) --> void
+function Bridge.SetPurchaseState(playerId, purchaseId, state) --> void
 	local data = PlayerData:GetPlayerDataByUserId(playerId)
 	data.PurchaseStates[purchaseId] = state
 end
 
-function PurchaseProcessorBridge:GetPurchaseTime(playerId, purchaseId) --> PurchaseTime: number | nil
+function Bridge.GetPurchaseTime(playerId, purchaseId) --> PurchaseTime: number | nil
 	local data = PlayerData:GetPlayerDataByUserId(playerId)
 	return data.PurchaseTimes[purchaseId]
 end
 
-function PurchaseProcessorBridge:SetPurchaseTime(playerId, purchaseId, time) --> void
+function Bridge.SetPurchaseTime(playerId, purchaseId, time) --> void
 	local data = PlayerData:GetPlayerDataByUserId(playerId)
 	data.PurchaseTimes[purchaseId] = time
 end
 
-function PurchaseProcessorBridge:GetPurchaseTimesDictionary(playerId) --> PurchaseTimes: {[string] = number}
+function Bridge.GetPurchaseTimesDictionary(playerId) --> PurchaseTimes: {[string] = number}
 	local data = PlayerData:GetPlayerDataByUserId(playerId)
 	return data.PurchaseTimes
 end
 
-function PurchaseProcessorBridge:WaitForDataReady(playerId) --> Continue: boolean
+function Bridge.WaitForDataReady(playerId) --> Continue: boolean
 	-- 1. Make sure player is in the game (return false otherwise)
 	local player = game.Players:GetPlayerByUserId(purchaseInfo.PlayerId)
 	if not player.Parent then
@@ -47,7 +47,7 @@ function PurchaseProcessorBridge:WaitForDataReady(playerId) --> Continue: boolea
 	return true
 end
 
-function PurchaseProcessorBridge:CanProcessProduct(purchaseInfo) --> CanProcess: boolean
+function Bridge.CanProcessProduct(purchaseInfo) --> CanProcess: boolean
 	-- 1. Make sure purchaseInfo.PlayerId is in the game (return false otherwise)
 	local player = game.Players:GetPlayerByUserId(purchaseInfo.PlayerId)
 	if not player then
@@ -62,7 +62,7 @@ function PurchaseProcessorBridge:CanProcessProduct(purchaseInfo) --> CanProcess:
 	return true
 end
 
-function PurchaseProcessorBridge:AwardProduct(purchaseInfo) --> Continue: boolean
+function Bridge.AwardProduct(purchaseInfo) --> Continue: boolean
 	local player = game.Players:GetPlayerByUserId(purchaseInfo.PlayerId)
 	-- 1. Try to award the product
 	Products:AwardProduct(player, purchaseInfo.ProductId)
@@ -79,12 +79,12 @@ end
 -- Leaving the server after buying a "NotSavedProduct" means you lose that product.
 -- This bypasses the saving logic of PurchaseProcessor for extremely simple products.
 
-function PurchaseProcessorBridge:IsNotSavedProduct(productId) --> IsNotSavedProduct: boolean
+function Bridge.IsNotSavedProduct(productId) --> IsNotSavedProduct: boolean
 	return false
 end
 
-function PurchaseProcessorBridge:AwardNotSavedProduct(purchaseInfo) --> void
+function Bridge.AwardNotSavedProduct(purchaseInfo) --> void
 	error("Not implemented")
 end
 
-return PurchaseProcessorBridge
+return Bridge
